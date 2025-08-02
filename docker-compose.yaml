@@ -1,0 +1,23 @@
+services:
+
+  workout-creator-api:
+    build:
+      dockerfile: Dockerfile
+    image: mertend/workout-creator-api:latest
+    container_name: merten-workout-creator-api
+    restart: unless-stopped
+    env_file:
+      - .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.gripl-backend.rule=Host(`www.workout-creator-api.mertendieckmann.de`) || Host(`workout-creator-api.mertendieckmann.de`)
+      - traefik.http.routers.gripl-backend.entrypoints=websecure
+      - traefik.http.routers.gripl-backend.tls=true
+      - traefik.http.routers.gripl-backend.tls.certresolver=lets-encrypt
+      - traefik.docker.network=web
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
