@@ -37,6 +37,7 @@ object WorkoutCreationAiServiceFactory {
                     Ensure that the workout plan is coherent and practical based on the provided inputs.
                     
                     Make sure to use and follow all given information from the user message to create a detailed and structured workout plan.
+                    If the users workout description contains any information about the exercise amount, use it, but you must always limit the number of exercises to a maximum of 10.
                     
                     Here are all possible muscle groups that can be used in the workout plan. Always use these names for the muscle groups and do not use any other names:
                     ${MuscleGroup.entries.joinToString(separator = ", ") { it.name.lowercase() }}

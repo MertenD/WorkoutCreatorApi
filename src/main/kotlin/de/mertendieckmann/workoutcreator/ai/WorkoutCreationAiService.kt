@@ -1,6 +1,5 @@
 package de.mertendieckmann.workoutcreator.ai
 
-import de.mertendieckmann.workoutcreator.model.MuscleGroup
 import de.mertendieckmann.workoutcreator.model.WorkoutInformation
 import dev.langchain4j.model.output.structured.Description
 import dev.langchain4j.service.UserMessage

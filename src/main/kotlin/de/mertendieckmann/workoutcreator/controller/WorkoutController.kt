@@ -21,6 +21,25 @@ class WorkoutController(
     fun createWorkout(
         @RequestBody workoutInformation: WorkoutInformation
     ): WorkoutCreationAiService.Workout {
+        if (workoutInformation.description.isBlank() || workoutInformation.muscleGroups.isEmpty()) {
+            throw IllegalArgumentException("You must either provide a non blank description or at least one muscle group.")
+        }
+        if (workoutInformation.description.isNotEmpty() && workoutInformation.description.length > 1000) {
+            throw IllegalArgumentException("The description must not be longer than 1000 characters.")
+        }
+        if (workoutInformation.muscleGroups.size > 10) {
+            throw IllegalArgumentException("You must not provide more than 20 muscle groups.")
+        }
+        if (workoutInformation.equipment.size > 10) {
+            throw IllegalArgumentException("You must not provide more than 10 equipment items.")
+        }
+        if (workoutInformation.muscleGroups.any { it.length > 50 }) {
+            throw IllegalArgumentException("Muscle group names must not be longer than 50 characters.")
+        }
+        if (workoutInformation.equipment.any { it.length > 50 }) {
+            throw IllegalArgumentException("Equipment names must not be longer than 50 characters.")
+        }
+
         val workoutCreationAiService = WorkoutCreationAiServiceFactory.create(jsonLlm)
         return workoutCreationAiService.createWorkout(workoutInformation)
     }
